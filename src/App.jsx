@@ -6,7 +6,7 @@ import {
   UserCheck, Megaphone, LogOut, Plus, Edit3, Send, Check, Search, Info,
   CircleCheck, UserPlus, Heart, Flame, Star, Sun, Moon, Wind, Sparkles,
   Mountain, Leaf, Music, Gift, Share2, MapPin, Trash2, Volume2,
-  Headphones, Eye, Waves, RefreshCw, Zap, Move, Dumbbell
+  Headphones, Eye, Waves, RefreshCw, Zap, Move, Dumbbell, AlignJustify
 } from "lucide-react";
 import {
   BarChart, Bar, AreaChart, Area, XAxis, YAxis,
@@ -214,16 +214,18 @@ const ADMIN_CHARTS = {
 const AppContext = createContext(null);
 // ═══════════════════════════════════════════════════════════════
 
-function PageHero({ image, title, subtitle }) {
+function PageHero({ image, title, subtitle, tall }) {
   const isGradient = image && (image.startsWith("linear-gradient") || image.startsWith("radial-gradient"));
-  const bgStyle = isGradient ? { position: "absolute", inset: 0, background: image, filter: "brightness(0.7)" } : { position: "absolute", inset: 0, backgroundImage: `url(${image})`, backgroundSize: "cover", backgroundPosition: "center", filter: "brightness(0.7)" };
+  const bgStyle = isGradient ? { position: "absolute", inset: 0, background: image, filter: "brightness(0.75)" } : { position: "absolute", inset: 0, backgroundImage: `url(${image})`, backgroundSize: "cover", backgroundPosition: "center", filter: "brightness(0.75)" };
+  const minH = tall ? 300 : 220;
+  const padTop = tall ? 60 : 40;
   return (
-    <div style={{ position: "relative", minHeight: 240, overflow: "hidden" }}>
+    <div style={{ position: "relative", minHeight: minH, overflow: "hidden", marginBottom: 16 }}>
       <div style={bgStyle} />
-      <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,.45) 0%, rgba(0,0,0,.05) 50%, rgba(0,0,0,.15) 100%)" }} />
-      <div style={{ position: "relative", padding: "80px 20px 24px", display: "flex", flexDirection: "column", justifyContent: "flex-end", minHeight: 240 }}>
-        <h1 style={{ fontFamily: "'DM Serif Display', serif", fontSize: "3.5rem", fontWeight: 600, color: "#fff", margin: 0, lineHeight: 1.05 }}>{title}</h1>
-        {subtitle && <p style={{ fontSize: 15, color: "rgba(255,255,255,.8)", margin: "8px 0 0", maxWidth: "85%", lineHeight: 1.4 }}>{subtitle}</p>}
+      <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,.35) 0%, rgba(0,0,0,.04) 50%, rgba(0,0,0,.12) 100%)" }} />
+      <div style={{ position: "relative", padding: `${padTop}px 20px 24px`, display: "flex", flexDirection: "column", justifyContent: "flex-end", minHeight: minH }}>
+        <h1 style={{ fontFamily: "'DM Serif Display', serif", fontSize: "3.5rem", fontWeight: 600, color: "#fff", margin: 0, lineHeight: 1.05, textShadow: "0 2px 12px rgba(0,0,0,.35)" }}>{title}</h1>
+        {subtitle && <p style={{ fontSize: 15, color: "rgba(255,255,255,.9)", margin: "8px 0 0", maxWidth: "85%", lineHeight: 1.4, textShadow: "0 1px 8px rgba(0,0,0,.4)" }}>{subtitle}</p>}
       </div>
     </div>
   );
@@ -356,7 +358,7 @@ function HomePage() {
 
   return (
     <div>
-      <PageHero image={STUDIO_IMAGES.home || GRADIENTS.home} title={<>{STUDIO_CONFIG.heroLine1}<br/><span style={{ color: T.accent, fontStyle: "italic" }}>{STUDIO_CONFIG.heroLine2}</span></>} subtitle={STUDIO_CONFIG.description} />
+      <PageHero tall image={STUDIO_IMAGES.home || GRADIENTS.home} title={<>{STUDIO_CONFIG.heroLine1}<br/><span style={{ color: T.accent, fontStyle: "italic" }}>{STUDIO_CONFIG.heroLine2}</span></>} subtitle={STUDIO_CONFIG.description} />
 
       <section style={{ padding: "20px 16px 0", position: "relative", zIndex: 10 }}>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 8 }}>
@@ -1078,13 +1080,13 @@ export default function App({ startInAdmin, onExitAdmin, onEnterAdmin }) {
 
   const mainTabs = [
     { id: "home", label: "Home", icon: Home },
-    { id: "classes", label: "Classes", icon: Wind },
     { id: "schedule", label: "Schedule", icon: Calendar },
     { id: "practice", label: "Practice", icon: TrendingUp },
+    { id: "community", label: "Community", icon: Heart },
     { id: "more", label: "More", icon: Menu },
   ];
   const moreItems = [
-    { id: "community", label: "Community", icon: Heart },
+    { id: "classes", label: "Classes", icon: AlignJustify },
     { id: "teachers", label: "Teachers", icon: Users },
     { id: "membership", label: "Membership", icon: CreditCard },
     { id: "events", label: "Events", icon: CalendarDays },

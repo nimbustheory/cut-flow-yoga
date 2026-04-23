@@ -1,12 +1,17 @@
 import { useState } from "react";
 import {
   Calendar, TrendingUp, Users, Heart, Sparkles, Layers,
-  Bell, Headphones, ChevronRight, Monitor, Smartphone, Star, Shield, Zap
+  Bell, Headphones, ChevronRight, Monitor, Smartphone, Star, Shield, Zap,
+  CreditCard, CalendarDays, LayoutDashboard, MapPin
 } from "lucide-react";
 import App from "./App.jsx";
 import { DEMO_CONFIG } from "./demo.config.js";
 
-const iconMap = { Sparkles, Layers, Heart, Shield, Star, Zap, Calendar, TrendingUp, Users, Bell, Headphones, Monitor, Smartphone };
+const iconMap = {
+  Sparkles, Layers, Heart, Shield, Star, Zap, Calendar, TrendingUp, Users,
+  Bell, Headphones, Monitor, Smartphone, CreditCard, CalendarDays,
+  LayoutDashboard, MapPin
+};
 const getIcon = (name) => iconMap[name] || Star;
 
 export default function DemoWrapper() {
@@ -32,11 +37,11 @@ export default function DemoWrapper() {
         {/* Studio Identity */}
         <div style={{ padding: "20px 24px 16px" }}>
           <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-            <div style={{ width: 44, height: 44, borderRadius: 12, background: accent, display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "'DM Serif Display', serif", fontSize: 22, fontWeight: 700, color: "#fff" }}>
+            <div style={{ width: 44, height: 44, borderRadius: 12, background: accent, display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "'Fraunces', serif", fontSize: 22, fontWeight: 700, color: "#fff" }}>
               {c.studio.logo}
             </div>
             <div>
-              <div style={{ fontFamily: "'DM Serif Display', serif", fontSize: 18, fontWeight: 600, letterSpacing: "0.02em", color: "#111827" }}>{c.studio.name}</div>
+              <div style={{ fontFamily: "'Fraunces', serif", fontSize: 18, fontWeight: 600, letterSpacing: "0.02em", color: "#111827" }}>{c.studio.name}</div>
               <div style={{ fontSize: 11, color: "#6b7280", marginTop: 1 }}>{c.studio.tagline}</div>
             </div>
           </div>
@@ -46,17 +51,20 @@ export default function DemoWrapper() {
         <div style={{ padding: "0 24px", flex: 1 }}>
           <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "#9ca3af", marginBottom: 12 }}>App Features</div>
           <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
-            {c.features.map((f, i) => (
-              <div key={i} style={{ display: "flex", alignItems: "flex-start", gap: 10, padding: "8px 10px", borderRadius: 8, background: "#f9fafb" }}>
-                <div style={{ width: 28, height: 28, borderRadius: 6, background: `${accent}12`, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, marginTop: 1 }}>
-                  <Star size={14} color={accent} />
+            {c.features.map((f, i) => {
+              const IconComp = getIcon(f.icon);
+              return (
+                <div key={i} style={{ display: "flex", alignItems: "flex-start", gap: 10, padding: "8px 10px", borderRadius: 8, background: "#f9fafb" }}>
+                  <div style={{ width: 28, height: 28, borderRadius: 6, background: `${accent}12`, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, marginTop: 1 }}>
+                    <IconComp size={14} color={accent} />
+                  </div>
+                  <div>
+                    <div style={{ fontSize: 13, fontWeight: 600, color: "#374151" }}>{f.label}</div>
+                    <div style={{ fontSize: 11, color: "#9ca3af", marginTop: 1, lineHeight: 1.3 }}>{f.description}</div>
+                  </div>
                 </div>
-                <div>
-                  <div style={{ fontSize: 13, fontWeight: 600, color: "#374151" }}>{f.label}</div>
-                  <div style={{ fontSize: 11, color: "#9ca3af", marginTop: 1, lineHeight: 1.3 }}>{f.description}</div>
-                </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
 
@@ -76,13 +84,13 @@ export default function DemoWrapper() {
           {/* Phone chrome */}
           <div style={{
             width: 414, background: "#1a1a24", borderRadius: 44, padding: "12px 12px",
-            boxShadow: "0 0 0 1px #2a2a34, 0 20px 60px rgba(0,0,0,.3), 0 0 120px rgba(120,72,168,.06)"
+            boxShadow: "0 0 0 1px #2a2a34, 0 20px 60px rgba(0,0,0,.3), 0 0 120px rgba(72,168,140,.04)"
           }}>
             {/* Notch */}
             <div style={{ width: 120, height: 6, background: "#2a2a34", borderRadius: 3, margin: "0 auto 8px" }} />
-            {/* Screen container */}
+            {/* Screen container - EXACT SPEC */}
             <div style={{
-              width: 390, height: 720, borderRadius: 32, overflow: "hidden", background: "white",
+              width: 390, height: 844, borderRadius: 28, overflow: "hidden", background: "white",
               position: "relative"
             }}>
               <App onEnterAdmin={() => setIsFullAdmin(true)} />
@@ -105,7 +113,7 @@ export default function DemoWrapper() {
                   <div style={{ width: 36, height: 36, borderRadius: 10, background: `${accent}12`, display: "flex", alignItems: "center", justifyContent: "center" }}>
                     {isAdminCard ? <Shield size={18} color={accent} /> : <IconComp size={18} color={accent} />}
                   </div>
-                  <h3 style={{ fontFamily: "'DM Serif Display', serif", fontSize: 18, fontWeight: 600, color: "#111827", margin: 0 }}>{card.title}</h3>
+                  <h3 style={{ fontFamily: "'Fraunces', serif", fontSize: 18, fontWeight: 600, color: "#111827", margin: 0 }}>{card.title}</h3>
                 </div>
                 <p style={{ fontSize: 12, color: "#6b7280", lineHeight: 1.6, margin: 0 }}>{card.description}</p>
                 {isAdminCard && (
@@ -119,7 +127,7 @@ export default function DemoWrapper() {
 
           {/* CTA Card */}
           <div style={{ background: `linear-gradient(135deg, ${accent}12, ${accentDark}08)`, border: `1px solid ${accent}30`, borderRadius: 14, padding: "22px 18px", textAlign: "center" }}>
-            <h3 style={{ fontFamily: "'DM Serif Display', serif", fontSize: 22, fontWeight: 600, color: "#111827", margin: "0 0 6px" }}>{c.cta.heading}</h3>
+            <h3 style={{ fontFamily: "'Fraunces', serif", fontSize: 22, fontWeight: 600, color: "#111827", margin: "0 0 6px" }}>{c.cta.heading}</h3>
             <p style={{ fontSize: 13, color: "#6b7280", margin: "0 0 16px", lineHeight: 1.4 }}>{c.cta.subheading}</p>
             <a href={c.cta.buttonUrl} target="_blank" rel="noopener noreferrer" style={{
               display: "inline-flex", alignItems: "center", gap: 6, padding: "12px 28px",
